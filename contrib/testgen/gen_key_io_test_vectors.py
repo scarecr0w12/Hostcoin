@@ -71,28 +71,28 @@ templates = [
 # templates for valid bech32 sequences
 bech32_templates = [
   # hrp, version, witprog_size, metadata, output_prefix
-  ('ltc',   0, 20, (False, 'main',    None, True), p2wpkh_prefix),
-  ('ltc',   0, 32, (False, 'main',    None, True), p2wsh_prefix),
-  ('ltc',   1,  2, (False, 'main',    None, True), (OP_1, 2)),
-  ('tltc',  0, 20, (False, 'test',    None, True), p2wpkh_prefix),
-  ('tltc',  0, 32, (False, 'test',    None, True), p2wsh_prefix),
-  ('tltc',  2, 16, (False, 'test',    None, True), (OP_2, 16)),
-  ('rltc',  0, 20, (False, 'regtest', None, True), p2wpkh_prefix),
-  ('rltc',  0, 32, (False, 'regtest', None, True), p2wsh_prefix),
-  ('rltc', 16, 40, (False, 'regtest', None, True), (OP_16, 40))
+  ('hsc',   0, 20, (False, 'main',    None, True), p2wpkh_prefix),
+  ('hsc',   0, 32, (False, 'main',    None, True), p2wsh_prefix),
+  ('hsc',   1,  2, (False, 'main',    None, True), (OP_1, 2)),
+  ('thsc',  0, 20, (False, 'test',    None, True), p2wpkh_prefix),
+  ('thsc',  0, 32, (False, 'test',    None, True), p2wsh_prefix),
+  ('thsc',  2, 16, (False, 'test',    None, True), (OP_2, 16)),
+  ('rhsc',  0, 20, (False, 'regtest', None, True), p2wpkh_prefix),
+  ('rhsc',  0, 32, (False, 'regtest', None, True), p2wsh_prefix),
+  ('rhsc', 16, 40, (False, 'regtest', None, True), (OP_16, 40))
 ]
 # templates for invalid bech32 sequences
 bech32_ng_templates = [
   # hrp, version, witprog_size, invalid_bech32, invalid_checksum, invalid_char
   ('tc',    0, 20, False, False, False),
-  ('tltc',  17, 32, False, False, False),
-  ('rltc',  3,  1, False, False, False),
-  ('ltc',   15, 41, False, False, False),
-  ('tltc',  0, 16, False, False, False),
-  ('rltc',  0, 32, True,  False, False),
-  ('ltc',   0, 16, True,  False, False),
-  ('tltc',  0, 32, False, True,  False),
-  ('rltc',  0, 20, False, False, True)
+  ('thsc',  17, 32, False, False, False),
+  ('rhsc',  3,  1, False, False, False),
+  ('hsc',   15, 41, False, False, False),
+  ('thsc',  0, 16, False, False, False),
+  ('rhsc',  0, 32, True,  False, False),
+  ('hsc',   0, 16, True,  False, False),
+  ('thsc',  0, 32, False, True,  False),
+  ('rhsc',  0, 20, False, False, True)
 ]
 
 def is_valid(v):
@@ -112,7 +112,7 @@ def is_valid(v):
 
 def is_valid_bech32(v):
     '''Check vector v for bech32 validity'''
-    for hrp in ['ltc', 'tltc', 'rltc']:
+    for hrp in ['hsc', 'thsc', 'rhsc']:
         if decode(hrp, v) != (None, None):
             return True
     return False
@@ -250,4 +250,3 @@ if __name__ == '__main__':
     data = list(islice(uiter(), count))
     json.dump(data, sys.stdout, sort_keys=True, indent=4)
     sys.stdout.write('\n')
-
